@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_dyndns_ip_mailer" default="compile.module.dyndns_ip_mailer">
+  <dirname property="module.dyndns_ip_mailer.basedir" file="${ant.file.module_dyndns_ip_mailer}"/>
+  
+  <property name="module.jdk.home.dyndns_ip_mailer" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.dyndns_ip_mailer" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.dyndns_ip_mailer" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.dyndns_ip_mailer" value="-encoding UTF-8 -source 9 -target 9 ${compiler.args}"/>
+  
+  <property name="dyndns_ip_mailer.output.dir" value="${module.dyndns_ip_mailer.basedir}/out/production/dyndns_ip_mailer"/>
+  <property name="dyndns_ip_mailer.testoutput.dir" value="${module.dyndns_ip_mailer.basedir}/out/test/dyndns_ip_mailer"/>
+  
+  <path id="dyndns_ip_mailer.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="dyndns_ip_mailer.module.production.classpath">
+    <path refid="${module.jdk.classpath.dyndns_ip_mailer}"/>
+    <path refid="library.javax.mail:mail:1.4.classpath"/>
+  </path>
+  
+  <path id="dyndns_ip_mailer.runtime.production.module.classpath">
+    <pathelement location="${dyndns_ip_mailer.output.dir}"/>
+    <path refid="library.javax.mail:mail:1.4.classpath"/>
+  </path>
+  
+  <path id="dyndns_ip_mailer.module.classpath">
+    <path refid="${module.jdk.classpath.dyndns_ip_mailer}"/>
+    <pathelement location="${dyndns_ip_mailer.output.dir}"/>
+    <path refid="library.javax.mail:mail:1.4.classpath"/>
+  </path>
+  
+  <path id="dyndns_ip_mailer.runtime.module.classpath">
+    <pathelement location="${dyndns_ip_mailer.testoutput.dir}"/>
+    <pathelement location="${dyndns_ip_mailer.output.dir}"/>
+    <path refid="library.javax.mail:mail:1.4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.dyndns_ip_mailer">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.dyndns_ip_mailer">
+    <patternset refid="excluded.from.module.dyndns_ip_mailer"/>
+  </patternset>
+  
+  <path id="dyndns_ip_mailer.module.sourcepath">
+    <dirset dir="${module.dyndns_ip_mailer.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.dyndns_ip_mailer" depends="compile.module.dyndns_ip_mailer.production,compile.module.dyndns_ip_mailer.tests" description="Compile module dyndns_ip_mailer"/>
+  
+  <target name="compile.module.dyndns_ip_mailer.production" depends="register.custom.compilers" description="Compile module dyndns_ip_mailer; production classes">
+    <mkdir dir="${dyndns_ip_mailer.output.dir}"/>
+    <javac2 destdir="${dyndns_ip_mailer.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.dyndns_ip_mailer}/javac">
+      <compilerarg line="${compiler.args.dyndns_ip_mailer}"/>
+      <bootclasspath refid="dyndns_ip_mailer.module.bootclasspath"/>
+      <classpath refid="dyndns_ip_mailer.module.production.classpath"/>
+      <src refid="dyndns_ip_mailer.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.dyndns_ip_mailer"/>
+    </javac2>
+    
+    <copy todir="${dyndns_ip_mailer.output.dir}">
+      <fileset dir="${module.dyndns_ip_mailer.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.dyndns_ip_mailer.tests" depends="register.custom.compilers,compile.module.dyndns_ip_mailer.production" description="compile module dyndns_ip_mailer; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.dyndns_ip_mailer" description="cleanup module">
+    <delete dir="${dyndns_ip_mailer.output.dir}"/>
+    <delete dir="${dyndns_ip_mailer.testoutput.dir}"/>
+  </target>
+</project>
