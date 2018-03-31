@@ -67,7 +67,7 @@ public class Main {
     private static void testIP() {
         URL whatismyip = null;
         try {
-            whatismyip = new URL("http://checkip.amazonaws.com");
+            whatismyip = new URL("http://server.olegsvs.ru/getip.php"); \\"http://checkip.amazonaws.com");
             BufferedReader in = null;
             in = new BufferedReader(new InputStreamReader(
                     whatismyip.openStream()));
